@@ -12,20 +12,24 @@ function calculateBMI(weight, height) {
 function getBMICategory(bmi) {
     if (bmi < 18.5) {
         return 'Underweight';
-    } else if (bmi >= 18.5 && bmi <= 24.9) {
+    } else if (bmi <= 24.9) {
         return 'Normal weight';
-    } else if (bmi >= 25 && bmi <= 29.9) {
+    } else if (bmi <= 29.9) {
         return 'Overweight';
     } else {
         return 'Obesity';
     }
 }
 
-function suggestWeightChange(bmi) {
+function suggestWeightChange(bmi, weight, height) {
     if (bmi < 18.5) {
-        return 'You should consider gaining weight.';
+        const targetWeight = 18.5 * height * height;
+        const weightToGain = targetWeight - weight;
+        return `You should consider gaining weight. You need to gain approximately ${weightToGain.toFixed(2)} kg to reach a normal weight.`;
     } else if (bmi > 24.9) {
-        return 'You should consider losing weight.';
+        const targetWeight = 24.9 * height * height;
+        const weightToLose = weight - targetWeight;
+        return `You should consider losing weight. You need to lose approximately ${weightToLose.toFixed(2)} kg to reach a normal weight.`;
     } else {
         return 'Your weight is normal.';
     }
@@ -45,7 +49,7 @@ rl.question('Enter your height in meters: ', (height) => {
             const parity = isEvenOrOdd(parseInt(number));
             console.log(`The number ${number} is ${parity}.`);
 
-            const suggestion = suggestWeightChange(bmi);
+            const suggestion = suggestWeightChange(bmi, weight, height);
             console.log(suggestion);
 
             rl.close();
