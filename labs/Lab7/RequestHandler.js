@@ -1,7 +1,6 @@
 const Post = require('./Post');
 
 class RequestHandler {
-
     async printTargetPost(userId, postId) {
         const allPosts = await this._getAllPosts(userId);
         const targetPost = allPosts.find(post => post.id === postId);
@@ -16,8 +15,11 @@ class RequestHandler {
     async _getAllPosts(userId) {
         try {
             const response = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`);
-            const postsData = response.data;
-            return postsData.map(post => new Post(post._userId, post._id, post._title, post._body));
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const postsData = await response.json();
+            return postsData.map(post => new Post(post.userId, post.id, post.title, post.body));
         } catch (error) {
             console.error('Error fetching posts:', error);
             return [];
