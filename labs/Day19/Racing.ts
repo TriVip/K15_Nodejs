@@ -1,6 +1,8 @@
-const horse = new Horse();
-const tiger = new Tiger();
-const dog = new Dog();
+import { Animal } from "./Animal";
+
+const horse = new Animal("Horse", 75);
+const tiger = new Animal("Tiger", 100);
+const dog = new Animal("Dog", 60);
 
 const animals: Animal[] = [horse, tiger, dog];
 

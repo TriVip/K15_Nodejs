@@ -1,4 +1,4 @@
-class Animal {
+export class Animal {
     name: string;
     maxSpeed: number;
     speed: number;
